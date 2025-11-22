@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #fafafa;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 {
+            font-size: 22px;
+            margin: 0;
+            color: #ff5e57;
+        }
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ff5e57;
+        }
+
+        .back-link {
+            display: block;
+            margin: 20px 40px;
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            color: #ff5e57;
+        }
+
+        /* --- Cập nhật quan trọng: Tăng max-width và thay đổi display --- */
+        .container {
+            max-width: 1400px; /* Tăng chiều rộng tối đa để chứa 3 cột */
+            margin: auto;
+            padding: 40px 20px;
+            display: flex; /* Bật Flexbox */
+            gap: 30px; /* Giảm khoảng cách giữa các cột một chút */
+        }
+
+        .image-box {
+            flex: 1; /* Chiếm 1 phần không gian */
+            min-width: 0;
+        }
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .info {
+            flex: 1; /* Chiếm 1 phần không gian */
+            min-width: 300px; /* Đảm bảo đủ không gian cho phần thông tin */
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+        }
+        .info h1 {
+            margin-top: 0;
+            font-size: 28px;
+            color: #333;
+        }
+        .price {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff5e57;
+            margin: 10px 0 25px;
+        }
+        .info p {
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .info strong {
+            color: #333;
+        }
+        .info .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .info .btn:hover {
+            background: #000;
+        }
+
+        /* --- Order Form Styles (Điều chỉnh để chiếm 1/3 không gian) --- */
+        .order-form-card {
+            flex: 1; /* Chiếm 1 phần không gian */
+            min-width: 300px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .order-form-card h2 {
+            margin-top: 0;
+            font-size: 22px; /* Giảm kích thước tiêu đề form một chút */
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px; /* Giảm khoảng cách giữa các trường form */
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 14px;
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 10px; /* Giảm padding input */
+            transition: border-color 0.2s;
+        }
+        .input-wrapper:focus-within {
+            border-color: #ff5e57;
+        }
+        .input-wrapper .icon {
+            margin-right: 10px;
+            color: #999;
+            font-size: 16px;
+        }
+        .input-wrapper input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 15px;
+            padding: 0;
+        }
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 12px; /* Giảm padding nút */
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background: #45a049;
+        }
+        .submit-btn .arrow-icon {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        /* Responsive: Đặt 2 cột, sau đó là 1 cột cho màn hình nhỏ */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1000px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .image-box {
+                flex: 1 1 45%; /* Ảnh và Info chiếm 45% */
+                max-width: 45%;
+            }
+            .info {
+                flex: 1 1 45%;
+                max-width: 45%;
+            }
+            .order-form-card {
+                flex: 1 1 90%; /* Form chiếm gần hết chiều ngang */
+                margin-top: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Xếp chồng 1 cột duy nhất */
+                gap: 20px;
+            }
+            .image-box, .info, .order-form-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+                width: 100%;
+                min-width: 0;
+            }
+            header, .back-link {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Romfashion Shop</h1>
+    <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="#">Sản phẩm</a>
+        <a href="#">Liên hệ</a>
+    </nav>
+</header>
+
+<a class="back-link" href="index.html">← Quay lại trang chủ</a>
+
+<div class="container">
+    <div class="image-box">
+        <img src="https://product.hstatic.net/200000605631/product/ao-thun-nam-insidemen-its006s3__6__7158a476e5984e6a8e77c05f3bcc60b1_f37b969980e2453ebcdd27210438b96e.jpg" alt="Áo Thun Nam Basic">
+    </div>
+
+    <div class="info">
+        <h1>Áo Thun Nam Basic</h1>
+        <div class="price">199.000đ</div>
+
+        <p><strong>Mô tả sản phẩm:</strong></p>
+        <p>
+            Áo thun nam form basic, chất liệu cotton 100% mềm mịn, co giãn nhẹ, thoáng khí.
+            Phù hợp mặc đi học, đi chơi, tập gym hoặc các hoạt động ngoài trời.
+        </p>
+
+        <p><strong>Chất liệu:</strong> Cotton 100%</p>
+        <p><strong>Màu sắc:</strong> Trắng, Đen, Xám</p>
+        <p><strong>Size:</strong> M, L, XL</p>
+
+        <a class="btn" href="#">Thêm vào giỏ hàng</a>
+    </div>
+
+    <div class="order-form-card">
+        <h2>Vui lòng điền thông tin để đặt hàng</h2>
+
+        <form>
+            <div class="form-group">
+                <label for="phone-number">Số điện thoại <span style="color: red;">*</span></label>
+                <div class="input-wrapper">
+                    <span class="icon">&#9742;</span>
+                    <input type="tel" id="phone-number" name="phone_number" placeholder="Số điện thoại" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="full-name">Họ và tên <span style="color: red;">*</span></label>
+                <div class="input-wrapper">
+                    <span class="icon">&#128100;</span>
+                    <input type="text" id="full-name" name="full_name" placeholder="Họ và tên" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="delivery-address">Địa chỉ giao hàng <span style="color: red;">*</span></label>
+                <div class="input-wrapper">
+                    <span class="icon">&#128205;</span>
+                    <input type="text" id="delivery-address" name="delivery_address" placeholder="Số nhà, đường, xã/phường" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="city">Tỉnh/Thành phố <span style="color: red;">*</span></label>
+                <div class="input-wrapper">
+                    <span class="icon">&#128205;</span>
+                    <input type="text" id="city" name="city" placeholder="Tỉnh/Thành phố" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                ĐẶT HÀNG NGAY <span class="arrow-icon">&rarr;</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
